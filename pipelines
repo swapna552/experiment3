@@ -1,0 +1,28 @@
+pipeline {
+ agent any // Use any available agent (node/worker) for the build
+ environment {
+ GIT_URL = 'https://github.com/harshiniadvik/jenkinslab.git' // Replace with your Git URL
+ GIT_BRANCH = 'main' // Replace with the branch you want to checkout
+ }
+ stages {
+ stage('Checkout Code') {
+ steps {
+ // Checkout code from Git repository
+ git branch: "${GIT_BRANCH}", url: "${GIT_URL}"
+ }
+ }
+ stage('Build') {
+ steps {
+ bat 'javac Samplename.java'
+ bat 'java Samplename'
+ }
+ }
+ }
+ post {
+    success {
+         echo "Build Successful!"
+    }
+     failure {
+         echo "Build Failed!"
+     }
+ }
